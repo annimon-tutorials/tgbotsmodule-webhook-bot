@@ -1,0 +1,2 @@
+name: tgbotsmodulebot
+token: env(TOKEN)
