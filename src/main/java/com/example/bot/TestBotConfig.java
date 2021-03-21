@@ -9,6 +9,8 @@ public class TestBotConfig {
 
     private String token;
 
+    private Long adminId;
+
     public String getName() {
         return name;
     }
@@ -23,5 +25,13 @@ public class TestBotConfig {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
     }
 }

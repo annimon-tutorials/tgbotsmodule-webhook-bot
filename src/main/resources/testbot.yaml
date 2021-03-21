@@ -1,2 +1,3 @@
 name: tgbotsmodulebot
 token: env(TOKEN)
+adminId: 89996062
