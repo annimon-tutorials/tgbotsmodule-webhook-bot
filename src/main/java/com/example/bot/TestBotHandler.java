@@ -7,6 +7,7 @@ import com.annimon.tgbotsmodule.commands.authority.For;
 import com.annimon.tgbotsmodule.commands.authority.SimpleAuthority;
 import com.annimon.tgbotsmodule.services.YamlConfigLoaderService;
 import com.example.bot.commands.English2Kana;
+import com.example.bot.commands.GuessNumberGame;
 import com.example.bot.commands.YouTubeThumbnail;
 import org.jetbrains.annotations.NotNull;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -29,12 +30,14 @@ public class TestBotHandler extends BotHandler {
                       "https://github.com/aNNiMON/tgbots-module/\n\n" +
                       "Available commands:\n" +
                       " - /kana word — convert English word to Katakana\n" +
+                      " - /game — start a guess number game\n" +
                       "\nAlso, you can send me a link to YouTube video and I'll send you a video thumbnail as a photo.")
                     .disableWebPagePreview()
                     .callAsync(ctx.sender);
         }));
         commands.register(new YouTubeThumbnail());
         commands.register(new English2Kana());
+        commands.registerBundle(new GuessNumberGame());
     }
 
     @Override
