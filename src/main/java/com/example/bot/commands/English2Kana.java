@@ -19,6 +19,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Regex command with arguments.
+ */
 public class English2Kana implements RegexCommand {
 
     private final OkHttpClient client = new OkHttpClient();

@@ -22,6 +22,9 @@ public class TestBotHandler extends BotHandler {
         final var configLoader = new YamlConfigLoaderService();
         botConfig = configLoader.loadResource("/testbot.yaml", TestBotConfig.class);
 
+        // A command registry requires a SimpleAuthority instance
+        // Authority system is based on roles. By default all commands available for all users
+        // For the CREATOR role you need to pass a telegram user id, or 0 if you don't have creators-only commands.
         final var authority = new SimpleAuthority(this, botConfig.getAdminId());
         commands = new CommandRegistry<>(this, authority);
         commands.register(new SimpleCommand("/start", ctx -> {
@@ -39,6 +42,7 @@ public class TestBotHandler extends BotHandler {
         }));
         commands.register(new YouTubeThumbnail());
         commands.register(new English2Kana());
+        // Register commands bundle (multiple commands)
         commands.registerBundle(new GuessNumberGame());
     }
 

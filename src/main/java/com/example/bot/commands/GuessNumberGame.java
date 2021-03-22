@@ -20,6 +20,10 @@ import org.jetbrains.annotations.NotNull;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+/**
+ * CommandBundle example.
+ * You can register multiple commands here.
+ */
 public class GuessNumberGame implements CommandBundle<For> {
 
     private final Random random;
@@ -44,7 +48,7 @@ public class GuessNumberGame implements CommandBundle<For> {
         var msg = ctx.reply()
                 .setText("Game started.\n" + game.formatMessage())
                 .enableMarkdown()
-                .setReplyMarkup(new InlineKeyboardMarkup(game.keyboard(userId)))
+                .setReplyMarkup(game.keyboard(userId))
                 .call(ctx.sender);
         game.messageId = msg.getMessageId();
         games.put(userId, game);
@@ -73,7 +77,7 @@ public class GuessNumberGame implements CommandBundle<For> {
                     "  _My number is %s than %d_",
                     (game.number > guess) ? "greater" : "less",
                     guess));
-            keyboard = new InlineKeyboardMarkup(game.keyboard(userId));
+            keyboard = game.keyboard(userId);
         } else {
             status = "\n\uD83D\uDE14 You lose. My number was " + game.number;
         }
@@ -104,7 +108,14 @@ public class GuessNumberGame implements CommandBundle<For> {
                    String.join("\n", historyLines);
         }
 
-        public List<List<InlineKeyboardButton>> keyboard(long userId) {
+        public InlineKeyboardMarkup keyboard(long userId) {
+            return new InlineKeyboardMarkup(rows(userId));
+        }
+
+        private List<List<InlineKeyboardButton>> rows(long userId) {
+            // Create two rows of buttons
+            // 0 1 2 3 4
+            // 5 6 7 8 9
             return Stream.of(IntStream.range(0, 5), IntStream.range(5, 10))
                     .map(stream -> stream
                             .filter(i -> numbersAvailable[i])

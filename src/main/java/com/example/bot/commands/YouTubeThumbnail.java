@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 
+/**
+ * This command detects a YouTube url in a message text
+ * and replies to a user with a thumbnail photo.
+ */
 public class YouTubeThumbnail implements RegexCommand {
 
     @Override
