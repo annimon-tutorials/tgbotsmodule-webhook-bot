@@ -26,9 +26,11 @@ public class TestBotHandler extends BotHandler {
         commands = new CommandRegistry<>(this, authority);
         commands.register(new SimpleCommand("/start", ctx -> {
             ctx.reply("Hi, " + ctx.user().getFirstName() + "\n" +
-                      "This bot is an example for tgbots-module library.\n" +
-                      "https://github.com/aNNiMON/tgbots-module/\n\n" +
-                      "Available commands:\n" +
+                      "This bot is an example for the tgbots-module library.\n" +
+                      "  https://github.com/aNNiMON/tgbots-module/\n" +
+                      "Source code\n" +
+                      "  https://github.com/annimon-tutorials/tgbotsmodule-webhook-bot\n\n" +
+                      "ℹ️ Available commands:\n" +
                       " - /kana word — convert English word to Katakana\n" +
                       " - /game — start a guess number game\n" +
                       "\nAlso, you can send me a link to YouTube video and I'll send you a video thumbnail as a photo.")
