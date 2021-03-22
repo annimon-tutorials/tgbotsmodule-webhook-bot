@@ -5,10 +5,13 @@ import com.annimon.tgbotsmodule.commands.CommandRegistry;
 import com.annimon.tgbotsmodule.commands.SimpleCommand;
 import com.annimon.tgbotsmodule.commands.authority.For;
 import com.annimon.tgbotsmodule.commands.authority.SimpleAuthority;
+import com.annimon.tgbotsmodule.commands.context.MessageContext;
 import com.annimon.tgbotsmodule.services.YamlConfigLoaderService;
 import com.example.bot.commands.English2Kana;
 import com.example.bot.commands.GuessNumberGame;
 import com.example.bot.commands.YouTubeThumbnail;
+import java.lang.management.ManagementFactory;
+import java.time.Duration;
 import org.jetbrains.annotations.NotNull;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -40,10 +43,25 @@ public class TestBotHandler extends BotHandler {
                     .disableWebPagePreview()
                     .callAsync(ctx.sender);
         }));
+        // Register creator-only command
+        commands.register(new SimpleCommand("/uptime", For.CREATOR, this::uptime));
+        // Register commands as separated classes
         commands.register(new YouTubeThumbnail());
         commands.register(new English2Kana());
         // Register commands bundle (multiple commands)
         commands.registerBundle(new GuessNumberGame());
+    }
+
+    private void uptime(MessageContext ctx) {
+        final var rb = ManagementFactory.getRuntimeMXBean();
+        final long minutes = Duration.ofMillis(rb.getUptime()).toMinutes();
+        final var r = Runtime.getRuntime();
+        final double used = (r.totalMemory() - r.freeMemory()) / 1048576d;
+        final double total = r.totalMemory() / 1048576d;
+        ctx.reply(String.format("*Uptime*: %.2f hours%n", minutes / 60d) +
+                  String.format("*Memory*: %.2f MiB of %.2f MiB", used, total))
+                .enableMarkdown()
+                .callAsync(ctx.sender);
     }
 
     @Override
