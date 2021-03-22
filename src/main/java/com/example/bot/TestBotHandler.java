@@ -1,13 +1,13 @@
 package com.example.bot;
 
 import com.annimon.tgbotsmodule.BotHandler;
-import com.annimon.tgbotsmodule.api.methods.Methods;
 import com.annimon.tgbotsmodule.commands.CommandRegistry;
 import com.annimon.tgbotsmodule.commands.SimpleCommand;
 import com.annimon.tgbotsmodule.commands.authority.For;
 import com.annimon.tgbotsmodule.commands.authority.SimpleAuthority;
 import com.annimon.tgbotsmodule.services.YamlConfigLoaderService;
-import java.util.Locale;
+import com.example.bot.commands.English2Kana;
+import com.example.bot.commands.YouTubeThumbnail;
 import org.jetbrains.annotations.NotNull;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -24,9 +24,17 @@ public class TestBotHandler extends BotHandler {
         final var authority = new SimpleAuthority(this, botConfig.getAdminId());
         commands = new CommandRegistry<>(this, authority);
         commands.register(new SimpleCommand("/start", ctx -> {
-            ctx.reply("Hi, " + ctx.user().getFirstName())
+            ctx.reply("Hi, " + ctx.user().getFirstName() + "\n" +
+                      "This bot is an example for tgbots-module library.\n" +
+                      "https://github.com/aNNiMON/tgbots-module/\n\n" +
+                      "Available commands:\n" +
+                      " - /kana word — convert English word to Katakana\n" +
+                      "\nAlso, you can send me a link to YouTube video and I'll send you a video thumbnail as a photo.")
+                    .disableWebPagePreview()
                     .callAsync(ctx.sender);
         }));
+        commands.register(new YouTubeThumbnail());
+        commands.register(new English2Kana());
     }
 
     @Override
@@ -35,11 +43,12 @@ public class TestBotHandler extends BotHandler {
             return null;
         }
 
-        final var msg = update.getMessage();
-        if (msg != null && msg.hasText()) {
-            Methods.sendMessage(msg.getChatId(), msg.getText().toUpperCase(Locale.ROOT))
-                    .callAsync(this);
-        }
+        // Process other messages
+        //final var msg = update.getMessage();
+        //if (msg != null && msg.hasText()) {
+        //    Methods.sendMessage(msg.getChatId(), msg.getText().toUpperCase(Locale.ROOT))
+        //            .callAsync(this);
+        //}
         return null;
     }
 
