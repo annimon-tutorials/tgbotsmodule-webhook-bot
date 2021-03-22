@@ -10,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class TestBot implements BotModule {
 
     public static void main(String[] args) {
-        Runner.run(List.of(new TestBot()));
+        final var profile = args.length >= 1 ? args[0] : "";
+        Runner.run(profile, List.of(new TestBot()));
     }
 
     @Override

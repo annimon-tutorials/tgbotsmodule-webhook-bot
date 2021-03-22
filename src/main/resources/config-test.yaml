@@ -1,0 +1,6 @@
+log-level: INFO
+webhook:
+  enabled: false
+  externalUrl: env(URL)
+modules:
+ - com.example.bot.TestBot
