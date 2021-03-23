@@ -14,11 +14,13 @@ mainClassName = 'com.annimon.tgbotsmodule.Runner'
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     implementation 'com.annimon:tgbots-module:0.15'
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.0'
+    implementation 'com.github.annimon-tutorials:tgbotsmodule-bot2:e0a072b0f3'
 }
 
 task stage(dependsOn: ['clean', 'shadowJar'])
